@@ -1,0 +1,150 @@
+﻿@*
+Project 2-1 Build the Price Quotation app:
+
+For this project, you will build a single-page
+price quot app
+
+Specifications:
+===============
+
+	*	When the app starts, it should display the 
+		Price Quotation page with no subtotal or
+		discount percent, and it should set the 
+		discount amount and total to $0.00.
+
+	*	If the user enters a valid subtotal and 
+		discount percent and clicks the Calculate 
+		button, the app should calculate and display
+		the discount amount and total.
+
+	*	If the user enters invalid data and clicks 
+		the Calculate button, the app should display
+		a summary of validation errors above the form.
+
+	*	Here are the requirements for valid data:
+
+		o 	The sales price is required and must be
+			a valid number that is > 0 and <= 1000000.
+
+		o	The discount percent is required and must
+			be a valid number from 0 to 100.
+
+	*	If the user clicks the Clear link, the app 
+		should reset the form to how it was when the
+		app first started.
+
+	*	Use the MVC pattern. To do that, create a model
+		class that stores the subtotal and discount
+		percent and calculates the discount amount and
+		total.
+
+		Make sure to bind that model to the Razor view
+		that displays the Price Quotation page shown above.
+
+	*	Use a Razor layout to store the <html>, <head>,
+		and <body> elements.
+
+	*	Use a custom CSS style sheet to style the HTML
+		elements so they appear as shown.
+
+*@
+
+@*
+Project 3-1 Style the Price Quotation app:
+
+For this project, you will use Bootstrap to 
+improve the appearance of the app create in
+project 2-1.
+
+Specifications
+==============
+
+	*	Use a horizontal form for small, medium 
+		and large (tablets, desktops, large desktops)
+		screen sizes.
+
+		For this form to lay out properly, you should:
+
+		o	For each row, use a <div> element that's 
+			assigned to the row and form-group classes.
+
+		o	Code each <input> element within a <div>
+			element that's assigned to the correct
+			col class.
+
+		o 	Display a validation message in the third
+			column.
+
+		Note: In the first printing of this book, the
+		code in figures 3-7 and 3-10 isn't correct.
+
+		It should be coded as described by the 
+		corrections PDF that you can download from
+		murach.com.
+
+	*	Use a vertical form on extra small screens
+		(phones).
+
+	*	Start the page with a jumbotron component that
+		uses one of Bootstrap's context classes to set
+		the background color. In addition, it should 
+		center the text and make it white.
+
+	*	In the jumbotron, specify an <h1> element that
+		displays the name of the app and a Font Awesome
+		icon named money-bill-alt.
+
+	*	Style the Calculate button and the Clear link
+		as buttons and set their background color to
+		the same color that’s used by the jumbotron.
+
+	*	Display the validation messages in red.
+
+	*	Add margin and/or padding between elements as
+		needed to improve the look of the form.
+
+	*	Override the Bootstrap style for the <h1>
+		element in the jumbotron so that its font
+		size is 4 rem units.
+*@
+
+@model PriceQuotation
+
+@{
+    ViewBag.Title ="Price Quotation";
+}
+
+@*<div asp-validation-summary="All"></div>*@
+
+<form asp-action="Index" method="POST">
+    <div class="row form-group">
+        <label class="col-sm-3" asp-for="Subtotal">Subtotal:</label>
+		<div class="col-sm-4">
+			<input asp-for="Subtotal" />
+		</div>
+		<span class="col-sm text-danger" asp-validation-for="Subtotal"></span>
+    </div>
+
+	<div class="row form-group">
+		<label class="col-sm-3" asp-for="DiscountPercent">Discount percent:</label>
+		<div class="col-sm-4">
+			<input asp-for="DiscountPercent" />
+		</div>
+		<span class="col-sm text-danger" asp-validation-for="DiscountPercent"></span>
+	</div>
+
+	<div class="row form-group">
+        <label class="col-sm-3">Discount amount:</label>
+        <label class="col-sm-4">@ViewBag.Discount.ToString("c2")</label>
+    </div>
+
+	<div class="row form-group">
+		<label class="col-sm-3">Total:</label>
+		<label class="col-sm-4">@ViewBag.Total.ToString("c2")</label>
+    </div>
+
+	<div class="row">
+        <button class="btn btn-success" type="submit">Calculate</button>
+        <a class="btn btn-success ml-2" asp-action="Index">Clear</a>
+    </div>
+</form>
